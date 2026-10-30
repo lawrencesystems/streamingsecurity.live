@@ -1,0 +1,5 @@
+{{- $s := int . -}}
+{{- $h := div $s 3600 -}}
+{{- $m := div (mod $s 3600) 60 -}}
+{{- $sec := mod $s 60 -}}
+{{- if $h }}{{ $h }}:{{ printf "%02d" $m }}{{ else }}{{ $m }}{{ end }}:{{ printf "%02d" $sec -}}

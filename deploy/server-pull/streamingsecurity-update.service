@@ -1,0 +1,23 @@
+[Unit]
+Description=Pull and publish streamingsecurity.live from GitHub and YouTube
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=sitebuild
+Group=sitebuild
+Environment=REPO_DIR=/srv/streamingsecurity
+Environment=WEB_ROOT=/var/www/streamingsecurity/public
+# Hugo, git and yt-dlp need a writable home and cache; systemd creates /var/cache/streamingsecurity.
+CacheDirectory=streamingsecurity
+Environment=HOME=/var/cache/streamingsecurity
+Environment=HUGO_CACHEDIR=/var/cache/streamingsecurity/hugo
+Environment=XDG_CACHE_HOME=/var/cache/streamingsecurity
+ExecStart=/srv/streamingsecurity/deploy/server-pull/update.sh
+# Lock the job down: it only needs the repo, the web root, and outbound HTTPS.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/srv/streamingsecurity /var/www/streamingsecurity

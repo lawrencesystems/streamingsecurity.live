@@ -1,0 +1,18 @@
+{{ define "head" }}
+{{ with .Params.redirect }}
+<meta http-equiv="refresh" content="0; url={{ . }}">
+<meta name="robots" content="noindex">
+{{ end }}
+{{ end }}
+{{ define "main" }}
+<main id="main" class="section page">
+  <div class="wrap">
+    <h1 class="label"><span class="prompt">~#</span> {{ lower .Title }}</h1>
+    {{ with .Params.redirect }}
+    <p class="prose">Forwarding you to <a href="{{ . }}">{{ . }}</a>.</p>
+    {{ else }}
+    <div class="prose">{{ .Content }}</div>
+    {{ end }}
+  </div>
+</main>
+{{ end }}

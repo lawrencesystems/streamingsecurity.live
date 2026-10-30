@@ -1,0 +1,29 @@
+# Add to /etc/caddy/Caddyfile on the web server, then: systemctl reload caddy
+
+www.streamingsecurity.live {
+	redir https://streamingsecurity.live{uri} permanent
+}
+
+streamingsecurity.live {
+	root * /var/www/streamingsecurity/public
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		X-Frame-Options "SAMEORIGIN"
+		-Server
+	}
+	@assets path /css/* /fonts/* /thumbs/* /og/*
+	header @assets Cache-Control "public, max-age=2592000"
+	# The homepage changes every week, so do not let browsers hold it long
+	header /index.html Cache-Control "public, max-age=300"
+	@probes path /wp-* /xmlrpc.php *.php /.env* /.git*
+	abort @probes
+	file_server
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+}

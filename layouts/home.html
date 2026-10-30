@@ -1,0 +1,67 @@
+{{ define "main" }}
+{{ $eps := slice }}
+{{ with site.Data.episodes }}{{ $eps = .episodes }}{{ end }}
+<main id="main">
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="crt">
+        <p class="crt-line"><span class="prompt">~#</span> ./streaming_security --live --day=tuesday</p>
+        <h1>{{ .Params.tagline }}</h1>
+        <p class="intro">{{ .Params.intro }}</p>
+        <p class="actions">
+          <a class="btn btn-primary" href="{{ site.Params.youtube }}?sub_confirmation=1">Subscribe on YouTube</a>
+          {{ with index $eps 0 }}<a class="btn" href="{{ .url }}">Watch the latest</a>{{ end }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="episodes" class="section">
+    <div class="wrap">
+      <h2 class="label"><span class="prompt">~#</span> ls episodes/ --newest-first</h2>
+      {{ if $eps }}
+      <ol class="episodes" reversed>
+        {{ range $i, $e := $eps }}
+        <li class="ep{{ if eq $i 0 }} ep-latest{{ end }}">
+          <a href="{{ $e.url }}" class="ep-link">
+            <span class="ep-thumb">
+              {{ with and $e.thumb (resources.Get $e.thumb) }}
+              {{ $w := cond (eq $i 0) "1280x" "640x" }}
+              {{ $img := .Resize (printf "%s jpg q78" $w) }}
+              <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" loading="{{ cond (eq $i 0) "eager" "lazy" }}" decoding="async">
+              {{ end }}
+              <span class="ep-time">{{ partial "duration.html" $e.seconds }}</span>
+            </span>
+            <span class="ep-body">
+              <span class="ep-meta">
+                {{ if ne $e.episode nil }}<span class="ep-num"><span class="hash">#</span>EP {{ $e.episode }}</span>{{ end }}
+                {{ if eq $i 0 }}<span class="ep-new">Latest</span>{{ end }}
+                {{ with $e.published }}<time datetime="{{ . }}">{{ time.Format "Jan 2, 2006" (time.AsTime .) }}</time>{{ end }}
+              </span>
+              <span class="ep-title">{{ $e.title }}</span>
+            </span>
+          </a>
+        </li>
+        {{ end }}
+      </ol>
+      {{ else }}
+      <p class="empty">No episodes loaded yet. Run <code>scripts/fetch-episodes.py</code>, or <a href="{{ site.Params.youtube }}">watch on YouTube</a>.</p>
+      {{ end }}
+    </div>
+  </section>
+
+  <section id="about" class="section about">
+    <div class="wrap about-inner">
+      <h2 class="label"><span class="prompt">~#</span> cat about.txt</h2>
+      <div class="prose">
+        {{ .Content }}
+      </div>
+      <dl class="facts">
+        <div><dt>When</dt><dd>Live every Tuesday</dd></div>
+        <div><dt>Where</dt><dd><a href="{{ site.Params.youtube }}">youtube.com/@StreamingSecurity</a></dd></div>
+        <div><dt>Hosts</dt><dd>{{ range $i, $h := .Params.hosts }}{{ if $i }} and {{ end }}{{ with $h.url }}<a href="{{ . }}">{{ $h.name }}</a>{{ else }}{{ $h.name }}{{ end }}{{ end }}</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+{{ end }}

@@ -1,0 +1,6 @@
+public/
+resources/_gen/
+.hugo_build.lock
+# Generated from YouTube by scripts/fetch-episodes.py on every build
+data/episodes.json
+assets/thumbs/

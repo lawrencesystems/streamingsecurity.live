@@ -1,0 +1,15 @@
+baseURL: https://streamingsecurity.live/
+languageCode: en-us
+title: Streaming Security
+enableRobotsTXT: true
+disableKinds: [taxonomy, term, section, rss]
+timeZone: America/Detroit
+
+params:
+  description: A live cybersecurity show, every Tuesday. Tom Lawrence and Matt Lee break down the week's exploits, breaches, and advisories, and which control would have caught them.
+  youtube: https://www.youtube.com/@StreamingSecurity
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: false
