@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {{ $title := cond .IsHome (printf "%s | Live every Tuesday" site.Title) (printf "%s | %s" .Title site.Title) }}
+  {{ $title := cond .IsHome (printf "%s | Live on Tuesdays" site.Title) (printf "%s | %s" .Title site.Title) }}
   <title>{{ $title }}</title>
   {{ $desc := .Description | default site.Params.description }}
   <meta name="description" content="{{ $desc }}">

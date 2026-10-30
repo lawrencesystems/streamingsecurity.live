@@ -5,8 +5,9 @@
   <section class="hero">
     <div class="wrap hero-inner">
       <div class="crt">
-        <p class="crt-line"><span class="prompt">~#</span> ./streaming_security --live --day=tuesday</p>
+        <p class="crt-line"><span class="prompt">~#</span> ./streaming_security --live --day=tuesday --best-effort</p>
         <h1>{{ .Params.tagline }}</h1>
+        {{ with .Params.footnote }}<p class="footnote">{{ . }}</p>{{ end }}
         <p class="intro">{{ .Params.intro }}</p>
         <p class="actions">
           <a class="btn btn-primary" href="{{ site.Params.youtube }}?sub_confirmation=1">Subscribe on YouTube</a>
@@ -57,7 +58,7 @@
         {{ .Content }}
       </div>
       <dl class="facts">
-        <div><dt>When</dt><dd>Live every Tuesday</dd></div>
+        <div><dt>When</dt><dd>Live every Tuesday, except when we can't</dd></div>
         <div><dt>Where</dt><dd><a href="{{ site.Params.youtube }}">youtube.com/@StreamingSecurity</a></dd></div>
         <div><dt>Hosts</dt><dd>{{ range $i, $h := .Params.hosts }}{{ if $i }} and {{ end }}{{ with $h.url }}<a href="{{ . }}">{{ $h.name }}</a>{{ else }}{{ $h.name }}{{ end }}{{ end }}</dd></div>
       </dl>

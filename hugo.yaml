@@ -6,7 +6,7 @@ disableKinds: [taxonomy, term, section, rss]
 timeZone: America/Detroit
 
 params:
-  description: A live cybersecurity show, every Tuesday. Tom Lawrence and Matt Lee break down the week's exploits, breaches, and advisories, and which control would have caught them.
+  description: A live cybersecurity show, every Tuesday (except when we can't). Tom Lawrence and Matt Lee break down the week's exploits, breaches, and advisories, and which control would have caught them.
   youtube: https://www.youtube.com/@StreamingSecurity
 
 markup:

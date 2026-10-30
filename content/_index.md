@@ -1,6 +1,7 @@
 ---
 title: Streaming Security
-tagline: A live cybersecurity show, every Tuesday.
+tagline: A live cybersecurity show, every Tuesday.*
+footnote: "* Except when we can't."
 intro: >-
   Tom Lawrence and Matt Lee break down the week's exploits, breaches, and advisories,
   then answer the question most coverage skips: which control would have actually caught this?

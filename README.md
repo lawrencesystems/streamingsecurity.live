@@ -1,6 +1,6 @@
 # streamingsecurity.live
 
-The site for Streaming Security, the live cybersecurity show with Tom Lawrence and Matt Lee, every Tuesday. One page: the show, every episode newest first, and an about section. Built with [Hugo](https://gohugo.io/). Everything here is public.
+The site for Streaming Security, the live cybersecurity show with Tom Lawrence and Matt Lee, every Tuesday (except when they can't). One page: the show, every episode newest first, and an about section. Built with [Hugo](https://gohugo.io/). Everything here is public.
 
 The look is the show's brand: the `~# streaming_security` root prompt with the red block cursor on a phosphor green terminal. Colors `#0C1F17`, `#33FF33`, `#C8342B`. Fonts are JetBrains Mono and Space Grotesk, self-hosted, so pages make no third-party requests.
 
