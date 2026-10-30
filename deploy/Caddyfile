@@ -15,7 +15,7 @@ streamingsecurity.live {
 		X-Frame-Options "SAMEORIGIN"
 		-Server
 	}
-	@assets path /css/* /fonts/* /thumbs/* /og/*
+	@assets path /css/* /fonts/* /thumbs/* /og/* /bg/*
 	header @assets Cache-Control "public, max-age=2592000"
 	# The homepage changes every week, so do not let browsers hold it long.
 	# Visitors request "/", not "/index.html", so match both.
