@@ -19,6 +19,9 @@
 
   <section id="episodes" class="section">
     <div class="wrap">
+      <div class="term">
+      {{ partial "titlebar.html" "~/episodes" }}
+      <div class="term-body">
       <h2 class="label"><span class="prompt">~#</span> ls episodes/ --newest-first</h2>
       {{ if $eps }}
       <ol class="episodes" reversed>
@@ -48,11 +51,16 @@
       {{ else }}
       <p class="empty">No episodes loaded yet. Run <code>scripts/fetch-episodes.py</code>, or <a href="{{ site.Params.youtube }}">watch on YouTube</a>.</p>
       {{ end }}
+      </div>
+      </div>
     </div>
   </section>
 
   <section id="about" class="section about">
-    <div class="wrap about-inner">
+    <div class="wrap">
+      <div class="term">
+      {{ partial "titlebar.html" "~/about" }}
+      <div class="term-body about-inner">
       <h2 class="label"><span class="prompt">~#</span> cat about.txt</h2>
       <div class="prose">
         {{ .Content }}
@@ -62,6 +70,8 @@
         <div><dt>Where</dt><dd><a href="{{ site.Params.youtube }}">youtube.com/@StreamingSecurity</a></dd></div>
         <div><dt>Hosts</dt><dd>{{ range $i, $h := .Params.hosts }}{{ if $i }} and {{ end }}{{ with $h.url }}<a href="{{ . }}">{{ $h.name }}</a>{{ else }}{{ $h.name }}{{ end }}{{ end }}</dd></div>
       </dl>
+      </div>
+      </div>
     </div>
   </section>
 </main>
