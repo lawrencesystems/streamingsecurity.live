@@ -12,7 +12,7 @@
 #   apt install -y git rsync python3 && install Hugo 0.146+ from the official GitHub release .deb
 #   curl -L -o /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux && chmod +x /usr/local/bin/yt-dlp
 #   useradd --system --no-create-home --shell /usr/sbin/nologin sitebuild
-#   git clone https://github.com/lawrencesystems/https-streamingsecurity.live-.git /srv/streamingsecurity
+#   git clone https://github.com/lawrencesystems/streamingsecurity.live.git /srv/streamingsecurity
 #   mkdir -p /var/www/streamingsecurity/public
 #   chown -R sitebuild:sitebuild /srv/streamingsecurity /var/www/streamingsecurity
 #   cp /srv/streamingsecurity/deploy/server-pull/streamingsecurity-update.{service,timer} /etc/systemd/system/
