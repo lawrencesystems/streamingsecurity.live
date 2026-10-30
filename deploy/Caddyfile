@@ -17,8 +17,10 @@ streamingsecurity.live {
 	}
 	@assets path /css/* /fonts/* /thumbs/* /og/*
 	header @assets Cache-Control "public, max-age=2592000"
-	# The homepage changes every week, so do not let browsers hold it long
-	header /index.html Cache-Control "public, max-age=300"
+	# The homepage changes every week, so do not let browsers hold it long.
+	# Visitors request "/", not "/index.html", so match both.
+	@home path / /index.html
+	header @home Cache-Control "public, max-age=300"
 	@probes path /wp-* /xmlrpc.php *.php /.env* /.git*
 	abort @probes
 	file_server
