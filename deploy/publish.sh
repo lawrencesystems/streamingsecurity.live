@@ -6,6 +6,11 @@
 #
 # Expects the SSH host alias "lsweb" in ~/.ssh/config (the same one used for lawrencesystems.com)
 # and yt-dlp on PATH. Override the target with PUBLISH_REMOTE if the folder differs.
+#
+# Safe to run unattended: it publishes only what is on main, keeps the previous episode
+# list when YouTube cannot be reached, and fails closed (no rsync) if the build would have
+# no episodes. It also verifies the live page afterwards, so a broken publish is reported
+# rather than passing silently.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -40,4 +45,15 @@ grep -q "streaming_security" public/index.html
 grep -q 'class=ep-link' public/index.html || { echo "ERROR: build has no episodes." >&2; exit 1; }
 
 rsync -az --delete --checksum $DRY public/ "$REMOTE"
+
+# Confirm the live page came up with its episodes, so an unattended run cannot
+# report success while the site is broken.
+if [[ -z "$DRY" ]]; then
+  tmp=$(mktemp)
+  code=$(curl -s -o "$tmp" -w '%{http_code}' https://streamingsecurity.live/) || code="000"
+  if [[ "$code" != "200" ]]; then rm -f "$tmp"; echo "ERROR: live homepage returned $code" >&2; exit 1; fi
+  if ! grep -q 'class=ep-link' "$tmp"; then rm -f "$tmp"; echo "ERROR: live homepage has no episodes" >&2; exit 1; fi
+  rm -f "$tmp"
+fi
+
 echo "Published $(git rev-parse --short HEAD) ($(git log -1 --pretty=%s)) with $(grep -o 'class=ep-link' public/index.html | wc -l) episodes to $REMOTE${DRY:+ (dry run)}"
