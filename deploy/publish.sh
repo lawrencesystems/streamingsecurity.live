@@ -28,10 +28,25 @@ git fetch --quiet origin main
 git checkout --quiet main
 git reset --quiet --hard origin/main
 
-# Newest episodes first, straight from the channel. If YouTube is unreachable, build with the last list.
+# Newest episodes first, straight from the channel. If YouTube is unreachable, build with the last
+# list: the site is meant to keep its previous data rather than break. What must not happen is a list
+# that goes stale for weeks while every run still reports success, so fetch-episodes.py timestamps its
+# last successful refresh and a week without one is reported as an ALERT. The wrapper that runs this
+# unattended turns an ALERT line into a notification.
 if ! python3 scripts/fetch-episodes.py; then
   if [[ -s data/episodes.json ]]; then
     echo "WARNING: episode refresh failed, publishing the previous list." >&2
+    # A single failure is not news; a week without a successful refresh is.
+    stamp=data/.last-episode-refresh
+    stale_days=7
+    if [[ -f "$stamp" ]]; then
+      days=$(( ( $(date +%s) - $(stat -c %Y "$stamp") ) / 86400 ))
+      if (( days >= stale_days )); then
+        echo "ALERT: the episode list has not refreshed in ${days} days; this run is republishing the same episodes."
+      fi
+    else
+      echo "ALERT: no record of a successful episode refresh; this run is republishing whatever list is on disk."
+    fi
   else
     echo "ERROR: no episode list and YouTube could not be reached." >&2
     exit 1

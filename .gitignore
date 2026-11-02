@@ -4,3 +4,7 @@ resources/_gen/
 # Generated from YouTube by scripts/fetch-episodes.py on every build
 data/episodes.json
 assets/thumbs/
+# Timestamp of the last successful episode refresh, used to detect a stale list
+data/.last-episode-refresh
+# Python bytecode from scripts/, never worth committing
+__pycache__/

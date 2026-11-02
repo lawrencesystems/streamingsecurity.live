@@ -12,24 +12,34 @@ has the last good list.
 Usage: scripts/fetch-episodes.py [--quiet]
 Needs yt-dlp on PATH (or set YTDLP=/path/to/yt-dlp). Python standard library otherwise.
 
+yt-dlp deprecates YouTube extraction without a JavaScript runtime, so one is passed
+when it is installed (node by default). A refresh that succeeds is timestamped in
+data/.last-episode-refresh, so publish.sh can tell a one-off failure from a list that
+has been stale for a week.
+
 Settings (environment variables):
-  CHANNEL_ID   YouTube channel ID          (default: Streaming Security)
-  MIN_SECONDS  skip videos shorter than this, so Shorts and clips stay off the list (default 300)
+  CHANNEL_ID         YouTube channel ID     (default: Streaming Security)
+  MIN_SECONDS        skip videos shorter than this, so Shorts and clips stay off the list (default 300)
+  YTDLP_JS_RUNTIME   JS runtime for yt-dlp  (default: node; skipped when not installed)
 """
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "episodes.json"
+STAMP = ROOT / "data" / ".last-episode-refresh"
 THUMBS = ROOT / "assets" / "thumbs"
 CHANNEL_ID = os.environ.get("CHANNEL_ID", "UC9zx73lifodRvMEfUHJodcw")
 MIN_SECONDS = int(os.environ.get("MIN_SECONDS", "300"))
 YTDLP = os.environ.get("YTDLP", "yt-dlp")
+JS_RUNTIME = os.environ.get("YTDLP_JS_RUNTIME", "node")
 QUIET = "--quiet" in sys.argv
 
 
@@ -38,9 +48,22 @@ def log(msg):
         print(msg)
 
 
+def js_runtime_args():
+    """Give yt-dlp a JS runtime when there is one.
+
+    Upstream warns that YouTube extraction without a JS runtime is deprecated and
+    will stop working. Use the runtime when it is installed, and carry on without it
+    when it is not: an older yt-dlp still extracts fine, and a missing runtime should
+    not break the refresh outright.
+    """
+    if JS_RUNTIME and shutil.which(JS_RUNTIME):
+        return ["--js-runtimes", JS_RUNTIME]
+    return []
+
+
 def ytdlp_json(url, *args, timeout=120):
     out = subprocess.run(
-        [YTDLP, "--quiet", "--no-warnings", "--skip-download", "-J", *args, url],
+        [YTDLP, *js_runtime_args(), "--quiet", "--no-warnings", "--skip-download", "-J", *args, url],
         capture_output=True, text=True, timeout=timeout,
     )
     if out.returncode != 0 or not out.stdout.strip():
@@ -139,6 +162,7 @@ def main():
     if changed:
         DATA.write_text(new_text)
     added = [e["title"] for e in episodes if e["id"] not in old]
+    STAMP.write_text(datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ") + "\n")
     log(f"{len(episodes)} episodes" + (f", new: {'; '.join(added)}" if added and old else "") + ("" if changed else " (no change)"))
     return 0
 
