@@ -1,0 +1,7 @@
+{{- /* "1:04:12" or "4:12" -> seconds */ -}}
+{{- $s := 0 -}}
+{{- range split (string .) ":" -}}
+  {{- $n := strings.TrimLeft "0" (strings.TrimSpace .) -}}
+  {{- $s = add (mul $s 60) (cond (eq $n "") 0 (int $n)) -}}
+{{- end -}}
+{{- return $s -}}

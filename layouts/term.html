@@ -1,0 +1,35 @@
+{{ define "main" }}
+{{ $id := int .Title }}
+{{ $name := "" }}{{ range site.Data.cis_controls.controls }}{{ if eq .id $id }}{{ $name = .name }}{{ end }}{{ end }}
+<main id="main" class="section">
+  <div class="wrap">
+    <div class="term">
+    {{ partial "titlebar.html" (printf "~/controls/%02d" $id) }}
+    <div class="term-body">
+      <p class="label"><span class="prompt">~#</span> grep -l "CIS {{ $id }}" episodes/*</p>
+      <h1 class="page-h1"><span class="chip-n">CIS {{ $id }}</span> {{ $name }}</h1>
+      <p class="lead">Episodes where a story was mapped to CIS Control {{ $id }}. <a href="/controls/">All controls</a></p>
+      <ol class="episodes ep-compact">
+        {{ range sort .Pages "Params.episode" "desc" }}
+        {{ $e := partial "episode-data.html" . }}
+        <li class="ep">
+          <a href="{{ .RelPermalink }}" class="ep-link">
+            <span class="ep-thumb">
+              {{ with and $e.thumb (resources.Get $e.thumb) }}
+              {{ $img := .Resize "640x jpg q78" }}
+              <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" loading="lazy" decoding="async">
+              {{ end }}
+            </span>
+            <span class="ep-body">
+              <span class="ep-meta">{{ with .Params.episode }}<span class="ep-num"><span class="hash">#</span>EP {{ . }}</span>{{ end }}</span>
+              <span class="ep-title">{{ $e.title | default .Title }}</span>
+            </span>
+          </a>
+        </li>
+        {{ end }}
+      </ol>
+    </div>
+    </div>
+  </div>
+</main>
+{{ end }}

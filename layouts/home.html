@@ -1,6 +1,9 @@
 {{ define "main" }}
 {{ $eps := slice }}
 {{ with site.Data.episodes }}{{ $eps = .episodes }}{{ end }}
+{{/* Episodes with show notes link to their notes page instead of YouTube */}}
+{{ $notes := dict }}
+{{ range $p := where site.RegularPages "Section" "episodes" }}{{ with (partial "episode-data.html" $p).id }}{{ $notes = merge $notes (dict . $p) }}{{ end }}{{ end }}
 <main id="main">
   <section class="hero">
     <div class="wrap hero-inner">
@@ -26,8 +29,9 @@
       {{ if $eps }}
       <ol class="episodes" reversed>
         {{ range $i, $e := $eps }}
+        {{ $np := index $notes $e.id }}
         <li class="ep{{ if eq $i 0 }} ep-latest{{ end }}">
-          <a href="{{ $e.url }}" class="ep-link">
+          <a href="{{ with $np }}{{ .RelPermalink }}{{ else }}{{ $e.url }}{{ end }}" class="ep-link">
             <span class="ep-thumb">
               {{ with and $e.thumb (resources.Get $e.thumb) }}
               {{ $w := cond (eq $i 0) "1280x" "640x" }}
@@ -40,6 +44,7 @@
               <span class="ep-meta">
                 {{ if ne $e.episode nil }}<span class="ep-num"><span class="hash">#</span>EP {{ $e.episode }}</span>{{ end }}
                 {{ if eq $i 0 }}<span class="ep-new">Latest</span>{{ end }}
+                {{ if $np }}<span class="ep-notes">Show notes</span>{{ end }}
                 {{ with $e.published }}<time datetime="{{ . }}">{{ time.Format "Jan 2, 2006" (time.AsTime .) }}</time>{{ end }}
               </span>
               <span class="ep-title">{{ $e.title }}</span>
