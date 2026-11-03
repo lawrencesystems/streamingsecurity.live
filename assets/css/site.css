@@ -268,3 +268,4 @@ code { font: 500 0.9em var(--mono); color: var(--phosphor-dim); }
 .controls .is-empty .c-id, .controls .is-empty .c-count { color: var(--muted); opacity: 0.7; }
 @media (max-width: 520px) { .controls li > a, .controls li.is-empty { grid-template-columns: 2.4em 1fr; } .c-count { grid-column: 2; } }
 .ep-compact { grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.notes td:first-child { white-space: nowrap; }
