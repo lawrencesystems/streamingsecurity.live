@@ -1,0 +1,27 @@
+{{ define "main" }}
+{{ $terms := .Data.Terms }}
+<main id="main" class="section">
+  <div class="wrap">
+    <div class="term">
+    {{ partial "titlebar.html" "~/controls" }}
+    <div class="term-body">
+      <h1 class="label"><span class="prompt">~#</span> ls -l controls/</h1>
+      <p class="lead">Every story on the show gets the same question: which control would have actually caught this? These are the {{ len site.Data.cis_controls.controls }} <a href="{{ site.Data.cis_controls.url }}">CIS Critical Security Controls ({{ site.Data.cis_controls.version }})</a>, and the episodes that mapped a story to each one.</p>
+      <ol class="controls">
+        {{ range site.Data.cis_controls.controls }}
+        {{ $t := index $terms (string .id) }}
+        {{ $n := 0 }}{{ with $t }}{{ $n = len .Pages }}{{ end }}
+        <li class="{{ if not $n }}is-empty{{ end }}">
+          {{ if $n }}<a href="{{ $t.Page.RelPermalink }}">{{ end }}
+            <span class="c-id">{{ printf "%02d" .id }}</span>
+            <span class="c-name">{{ .name }}</span>
+            <span class="c-count">{{ if $n }}{{ $n }} {{ cond (eq $n 1) "episode" "episodes" }}{{ else }}not yet{{ end }}</span>
+          {{ if $n }}</a>{{ end }}
+        </li>
+        {{ end }}
+      </ol>
+    </div>
+    </div>
+  </div>
+</main>
+{{ end }}

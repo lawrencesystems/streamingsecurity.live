@@ -1,0 +1,95 @@
+{{ define "main" }}
+{{ $e := partial "episode-data.html" . }}
+{{ $num := .Params.episode }}
+{{ $slug := .File.ContentBaseName }}
+{{ $title := $e.title | default .Title }}
+{{ $url := $e.url | default (cond (ne .Params.youtube "") (printf "https://www.youtube.com/watch?v=%s" (.Params.youtube | default "")) site.Params.youtube) }}
+<main id="main" class="section ep-page">
+  <div class="wrap">
+    <div class="term">
+    {{ partial "titlebar.html" (printf "~/episodes/ep%s" $slug) }}
+    <div class="term-body">
+      <p class="label"><span class="prompt">~#</span> cat ep{{ $slug }}/notes.md</p>
+
+      <header class="ep-head">
+        <a class="ep-thumb ep-head-thumb" href="{{ $url }}" aria-label="Watch {{ $title }} on YouTube">
+          {{ with and $e.thumb (resources.Get $e.thumb) }}
+          {{ $img := .Resize "1280x jpg q78" }}
+          <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" decoding="async">
+          {{ end }}
+          <span class="play" aria-hidden="true"></span>
+          {{ with $e.seconds }}<span class="ep-time">{{ partial "duration.html" . }}</span>{{ end }}
+        </a>
+        <div class="ep-head-text">
+          <p class="ep-meta">
+            {{ with $num }}<span class="ep-num"><span class="hash">#</span>EP {{ . }}</span>{{ end }}
+            {{ with $e.published }}<time datetime="{{ . }}">{{ time.Format "Jan 2, 2006" (time.AsTime .) }}</time>{{ end }}
+          </p>
+          <h1 class="ep-h1">{{ $title }}</h1>
+          {{ with .Description }}<p class="ep-desc">{{ . }}</p>{{ end }}
+          <p class="actions">
+            <a class="btn" href="{{ $url }}">Watch on YouTube</a>
+            {{ with .Params.forum }}<a class="btn" href="{{ . }}">Discuss on the forum</a>{{ end }}
+          </p>
+        </div>
+      </header>
+
+      <div class="ep-grid">
+        <article class="prose notes">
+          {{ .Content }}
+        </article>
+
+        <aside class="ep-side">
+          {{ with .Params.chapters }}
+          <section class="side-block">
+            <h2 class="side-label"><span class="prompt">~#</span> chapters</h2>
+            <ol class="chapters">
+              {{ range . }}
+              {{ $sec := partial "seconds.html" .t }}
+              <li><a href="{{ $url }}&amp;t={{ $sec }}s"><span class="t">{{ .t }}</span> {{ .title }}</a></li>
+              {{ end }}
+            </ol>
+          </section>
+          {{ end }}
+
+          {{ with .GetTerms "controls" }}
+          <section class="side-block">
+            <h2 class="side-label"><span class="prompt">~#</span> controls</h2>
+            <ul class="chips">
+              {{ range . }}
+              {{ $id := int .Title }}
+              {{ $name := "" }}{{ range site.Data.cis_controls.controls }}{{ if eq .id $id }}{{ $name = .name }}{{ end }}{{ end }}
+              <li><a href="{{ .RelPermalink }}"><span class="chip-n">CIS {{ $id }}</span> {{ $name }}</a></li>
+              {{ end }}
+            </ul>
+          </section>
+          {{ end }}
+
+          {{ with .Params.cves }}
+          <section class="side-block">
+            <h2 class="side-label"><span class="prompt">~#</span> cves</h2>
+            <ul class="cves">
+              {{ range . }}<li><a href="https://nvd.nist.gov/vuln/detail/{{ . }}">{{ . }}</a></li>{{ end }}
+            </ul>
+          </section>
+          {{ end }}
+        </aside>
+      </div>
+
+      {{ $all := sort (where site.RegularPages "Section" "episodes") "Params.episode" }}
+      {{ $prev := "" }}{{ $next := "" }}
+      {{ range $i, $p := $all }}
+        {{ if eq $p.RelPermalink $.RelPermalink }}
+          {{ if gt $i 0 }}{{ $prev = index $all (sub $i 1) }}{{ end }}
+          {{ if lt (add $i 1) (len $all) }}{{ $next = index $all (add $i 1) }}{{ end }}
+        {{ end }}
+      {{ end }}
+      <nav class="ep-nav" aria-label="More episodes">
+        {{ with $prev }}<a class="prev" href="{{ .RelPermalink }}"><span>cd ../ep{{ .File.ContentBaseName }}</span>{{ .Title }}</a>{{ else }}<span></span>{{ end }}
+        {{ with $next }}<a class="next" href="{{ .RelPermalink }}"><span>cd ../ep{{ .File.ContentBaseName }}</span>{{ .Title }}</a>{{ end }}
+      </nav>
+    </div>
+    </div>
+  </div>
+</main>
+{{ end }}

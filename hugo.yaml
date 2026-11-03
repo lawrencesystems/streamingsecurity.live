@@ -2,7 +2,18 @@ baseURL: https://streamingsecurity.live/
 languageCode: en-us
 title: Streaming Security
 enableRobotsTXT: true
-disableKinds: [taxonomy, term, section, rss]
+disableKinds: [section, rss]
+
+# Show notes live in content/episodes/<number>.md and publish at /ep/<number>/.
+permalinks:
+  page:
+    episodes: /ep/:contentbasename/
+  term:
+    controls: /controls/:slug/
+
+# The CIS Controls each episode maps its stories to. Names come from data/cis_controls.yaml.
+taxonomies:
+  control: controls
 timeZone: America/Detroit
 
 params:

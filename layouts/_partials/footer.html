@@ -2,7 +2,12 @@
   <nav class="tmux" aria-label="Footer">
     <div class="wrap tmux-inner">
       <span class="tmux-session" aria-hidden="true">[streaming_security]</span>
-      <span class="tmux-wins"><a class="tmux-on" href="/#episodes">0:episodes*</a> <a href="/#about">1:about</a> <a href="/contact/">2:contact</a></span>
+      {{ $on := "episodes" }}{{ if eq .Data.Plural "controls" }}{{ $on = "controls" }}{{ else if eq .RelPermalink "/laws/" }}{{ $on = "laws" }}{{ else if eq .RelPermalink "/contact/" }}{{ $on = "contact" }}{{ end }}
+      <span class="tmux-wins">
+        {{- range $i, $w := slice (dict "n" "episodes" "u" "/#episodes") (dict "n" "controls" "u" "/controls/") (dict "n" "laws" "u" "/laws/") (dict "n" "about" "u" "/#about") (dict "n" "contact" "u" "/contact/") }}
+        <a{{ if eq $w.n $on }} class="tmux-on" aria-current="page"{{ end }} href="{{ $w.u }}">{{ $i }}:{{ $w.n }}{{ if eq $w.n $on }}*{{ end }}</a>
+        {{- end }}
+      </span>
       <span class="tmux-right" aria-hidden="true">"streamingsecurity.live"</span>
     </div>
   </nav>

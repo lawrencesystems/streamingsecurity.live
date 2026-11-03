@@ -1,0 +1,12 @@
+{{- /* Finds the YouTube data for a notes page: by video ID if set, otherwise by episode number. Returns a map, or an empty one. */ -}}
+{{- $found := dict -}}
+{{- $id := .Params.youtube | default "" -}}
+{{- $num := .Params.episode -}}
+{{- with site.Data.episodes -}}
+  {{- range .episodes -}}
+    {{- if and $id (eq .id $id) -}}{{- $found = . -}}
+    {{- else if and (not $id) (ne $num nil) (ne .episode nil) (eq (int .episode) (int $num)) -}}{{- $found = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $found -}}

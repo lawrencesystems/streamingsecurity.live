@@ -17,6 +17,34 @@ What gets listed: anything on the channel at least 5 minutes long that has finis
 
 Publish dates are best effort. YouTube sometimes asks datacenter IPs to sign in before it gives out video details; when that happens the episode is listed without a date and the script tries again next run.
 
+## Show notes
+
+Each episode can have notes at `content/episodes/<number>.md`, published at `/ep/<number>/`. Start one with:
+
+```bash
+hugo new content episodes/6.md
+```
+
+The file holds only what YouTube does not know. Title, thumbnail, date, and length are matched in from `data/episodes.json` by episode number (or by `youtube:` video ID if the YouTube title has no "EP <number>").
+
+| Front matter | What it does |
+| --- | --- |
+| `description` | One or two sentences at the top of the page and in search results |
+| `forum` | Adds a "Discuss on the forum" button |
+| `controls` | CIS Controls v8.1 numbers, as strings: `["7", "8"]`. Each one lists the episode on `/controls/<n>/` |
+| `cves` | CVE IDs, linked to NVD |
+| `chapters` | `{ t: "4:12", title: "..." }` entries that link to that point in the video |
+
+The body is ordinary Markdown. Use `##` for each story.
+
+When an episode has notes, its homepage card links to the notes page and shows a "Show notes" badge. Without notes it links straight to YouTube, so notes can arrive after the stream.
+
+`/controls/` lists all 18 CIS Controls and how many episodes mapped a story to each. Control names live in `data/cis_controls.yaml`.
+
+## The Laws
+
+`/laws/` and the homepage "cat laws.txt" section come from `data/laws.yaml`. Add a new law at the end of the list; the numbering and the "The Two Laws" count update themselves. `episodes:` lists the episode numbers where a law came up, and links to their notes.
+
 ## Edit the site
 
 | What | File |
