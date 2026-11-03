@@ -61,6 +61,25 @@
     </div>
   </section>
 
+  {{ with site.Data.laws.laws }}
+  <section id="laws" class="section">
+    <div class="wrap">
+      <div class="term">
+      {{ partial "titlebar.html" "~/laws" }}
+      <div class="term-body">
+      <h2 class="label"><span class="prompt">~#</span> cat laws.txt</h2>
+      <ol class="law-teasers">
+        {{ range $i, $l := . }}
+        <li><a href="/laws/#law-{{ add $i 1 }}"><span class="law-num">Law {{ add $i 1 }}: {{ $l.name }}</span><span class="law-statement">{{ $l.statement }}</span></a></li>
+        {{ end }}
+      </ol>
+      <p class="more"><a href="/laws/">Read the laws, and why they hold</a></p>
+      </div>
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
   <section id="about" class="section about">
     <div class="wrap">
       <div class="term">

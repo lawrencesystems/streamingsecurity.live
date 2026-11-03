@@ -1,0 +1,35 @@
+{{ define "main" }}
+{{ $laws := site.Data.laws.laws }}
+<main id="main" class="section">
+  <div class="wrap">
+    <div class="term">
+    {{ partial "titlebar.html" "~/laws" }}
+    <div class="term-body">
+      <p class="label"><span class="prompt">~#</span> man 7 streaming_security_laws</p>
+      <h1 class="page-h1">The {{ partial "law-num.html" (len $laws) }} Laws of Streaming Security</h1>
+      <div class="lead prose">{{ .Content }}</div>
+      <ol class="laws">
+        {{ range $i, $l := $laws }}
+        {{ $n := add $i 1 }}
+        <li class="law" id="law-{{ $n }}">
+          <p class="law-num">Law {{ $n }}</p>
+          <h2 class="law-name">{{ $l.name }}</h2>
+          <p class="law-statement">{{ $l.statement }}</p>
+          <div class="prose law-body">{{ $l.body | markdownify }}</div>
+          <div class="law-implication">
+            <p class="law-tag">Implication</p>
+            <div class="prose">{{ $l.implication | markdownify }}</div>
+          </div>
+          {{ with $l.episodes }}
+          <p class="law-eps">Came up in:
+            {{ range $j, $e := . }}{{ if $j }}, {{ end }}{{ with site.GetPage (printf "/episodes/%d" $e) }}<a href="{{ .RelPermalink }}">EP{{ $e }}</a>{{ else }}EP{{ $e }}{{ end }}{{ end }}
+          </p>
+          {{ end }}
+        </li>
+        {{ end }}
+      </ol>
+    </div>
+    </div>
+  </div>
+</main>
+{{ end }}

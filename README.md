@@ -41,6 +41,10 @@ When an episode has notes, its homepage card links to the notes page and shows a
 
 `/controls/` lists all 18 CIS Controls and how many episodes mapped a story to each. Control names live in `data/cis_controls.yaml`.
 
+## The Laws
+
+`/laws/` and the homepage "cat laws.txt" section come from `data/laws.yaml`. Add a new law at the end of the list; the numbering and the "The Two Laws" count update themselves. `episodes:` lists the episode numbers where a law came up, and links to their notes.
+
 ## Edit the site
 
 | What | File |

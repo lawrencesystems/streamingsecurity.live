@@ -269,3 +269,21 @@ code { font: 500 0.9em var(--mono); color: var(--phosphor-dim); }
 @media (max-width: 520px) { .controls li > a, .controls li.is-empty { grid-template-columns: 2.4em 1fr; } .c-count { grid-column: 2; } }
 .ep-compact { grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
 .notes td:first-child { white-space: nowrap; }
+
+/* The Laws */
+.laws { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 28px; }
+.law { position: relative; padding: clamp(22px, 4vw, 36px); border: 1px solid var(--line); border-radius: 12px; background: rgba(7, 20, 14, 0.55); scroll-margin-top: 88px; }
+.law::before { content: ""; position: absolute; left: 0; top: 18px; bottom: 18px; width: 3px; background: var(--phosphor); border-radius: 0 3px 3px 0; box-shadow: 0 0 12px rgba(51, 255, 51, 0.5); }
+.law-num { font: 700 0.82rem/1.4 var(--mono); color: var(--phosphor); text-transform: uppercase; letter-spacing: 0.08em; }
+.law-name { font: 700 clamp(1.3rem, 2.6vw, 1.7rem)/1.2 var(--sans); color: var(--ink); margin-top: 6px; }
+.law-statement { font: 500 clamp(1.15rem, 2.4vw, 1.45rem)/1.35 var(--mono); color: var(--phosphor); text-shadow: 0 0 14px rgba(51, 255, 51, 0.25); margin-top: 16px; letter-spacing: -0.01em; }
+.law-body { margin-top: 18px; max-width: 70ch; }
+.law-implication { margin-top: 20px; padding: 14px 18px; border-left: 3px solid var(--phosphor-dim); background: rgba(51, 255, 51, 0.05); border-radius: 0 8px 8px 0; max-width: 70ch; }
+.law-tag { font: 500 0.78rem/1.4 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.law-eps { margin-top: 16px; font: 500 0.85rem/1.4 var(--mono); color: var(--muted); }
+.law-teasers { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.law-teasers a { display: grid; gap: 10px; height: 100%; padding: 20px 22px; border: 1px solid var(--line); border-radius: 10px; background: rgba(7, 20, 14, 0.55); text-decoration: none; }
+.law-teasers a:hover { border-color: var(--phosphor-dim); }
+.law-teasers .law-statement { margin: 0; font-size: 1.08rem; }
+.more { margin-top: 18px; font: 500 0.92rem/1.4 var(--mono); }
+.law-teasers a { align-content: start; }

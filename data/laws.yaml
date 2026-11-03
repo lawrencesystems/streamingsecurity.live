@@ -1,0 +1,27 @@
+# The Laws of Streaming Security. Add new laws at the end; numbering comes from the order.
+# body and implication are Markdown. episodes: episode numbers where the law came up (optional).
+laws:
+  - name: The Law of Successive Exploitation
+    statement: Once a vulnerability has been found and exploited in a product, another will be found, and another after that.
+    body: >-
+      The first exploited vulnerability is a signal, not an endpoint. AI-driven research doesn't stop
+      when it finds something; harnesses and RPA flows keep spending "clock cycles" analyzing the same
+      product, and every finding sharpens the next search. Attackers and researchers concentrate their
+      effort on whatever has already proven fruitful.
+    implication: >-
+      Treat a first exploited CVE as the start of a campaign against that product. Raise monitoring,
+      speed up patch cadence, and plan for compensating controls or replacement instead of assuming one
+      patch closes the chapter.
+    episodes: []
+
+  - name: The Law of Collapsing Complexity
+    statement: That which is complex will no longer be too complex for threat actors.
+    body: >-
+      "Too complicated to exploit in practice" used to be a defensible risk position. AI tooling removes
+      that barrier: multi-step chains, obscure code paths, and deep knowledge of a specific platform are
+      now within reach of attackers who could never have pulled them off by hand. We saw this during PHP
+      and Everything-to-Shell week.
+    implication: >-
+      Exploit complexity is no longer a valid reason to deprioritize a vulnerability. Rate risk on
+      exposure and impact, not on how hard the attack looks.
+    episodes: [6]
