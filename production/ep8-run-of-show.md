@@ -234,7 +234,7 @@ The 45 minute row in the segment bank below is the trim if the clock bites.
 | 52:30 | Chat Q and A | 5:00 | Both |
 | 57:30 | Open loops from EP7 | 1:30 | Tom |
 | 59:00 | Close and next week teaser | 1:00 | Tom |
-| 60:00 | End | | |
+| 60:00 | End | n/a | n/a |
 
 ### Block notes
 
