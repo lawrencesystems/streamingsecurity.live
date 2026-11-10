@@ -3,42 +3,17 @@
 *Airs Tue 2026-11-10. Hosts Tom Lawrence and Matt Lee.*
 
 Published so Matt and anyone watching can follow the prep. This is the production doc,
-not the show notes: it carries the running order, timings, per-story hooks, the deep dive
-plan, and the packaging options. Times are targets, not rails, because the show is live.
-
-Show notes for aired episodes are in `content/episodes/<n>.md`.
-
-Live cybersecurity show, every Tuesday (except when we can't). Tom Lawrence and Matt Lee break down the week's exploits, breaches, and advisories, then answer the question most coverage skips: which control would have actually caught this?
-
-Unrehearsed by design. Chat questions get answered as they come in. When we do not know something, we say so on air and follow up the next week.
-
----
-
-## How to use this
-
-1. Copy the whole file into a new per-episode doc.
-2. Fill in the header block and the story sheet.
-3. Keep the "never drop" beats. Cut or stretch segments from the bank to hit your runtime.
-4. Times are targets, not rails. Live means the clock moves.
-
-Do not write a script. Write a hook sentence and three bullets per story, then riff.
-
----
-
-## Per-episode header (fill in)
+not the show notes: it carries the running order, the per-story hooks, the deep dive plan,
+and the chosen packaging. Show notes for aired episodes are in `content/episodes/<n>.md`.
 
 | Field | Value |
 |---|---|
 | Episode | 8 |
 | Air date | Tue 2026-11-10 |
 | Hosts | Tom Lawrence, Matt Lee |
-| Producer / chat moderator | TBD |
-| Expected runtime | 62 min target, eight stories. EP6 ran 54:21, EP7 ran 56:59 |
-| Cold open hook (one sentence) | A crypto exchange lost 6.34 billion dollars, and the way in was a fake job interview. |
-| Guest (if any) | None |
-| Sponsor read (if any) | None |
-| Title (locked) | SSL-VPN: The Gift That Keeps On Giving |
-| Thumb text (locked) | MFA bypassed again |
+| Title | SSL-VPN: The Gift That Keeps On Giving |
+| Thumb text | MFA bypassed again |
+| Cold open hook | An RMM vendor took its own hosted platform offline today, and told every on-prem customer to do the same. |
 
 ### Story sheet (eight stories, in order, then the deep dive)
 
@@ -80,6 +55,8 @@ Hook: "An RMM vendor took its own hosted platform offline, and told every on-pre
 
 Tier to name: three layers, kept apart. The shutdown, the scanning and the hotfix ETA are vendor-attested on N-able's own status page. The 33 vulnerabilities are one researcher's claims with PoC code, reproduced by nobody else and not acknowledged by name by the vendor. The "exploitation attempts" line is a third-party advisory's assessment. No CVE, and no vendor advisory on the flaws themselves.
 *Disclosure: Tom works at Huntress, which published analysis cited in this story.*
+
+Before air: re-check incident 202580. The hotfix ETA was mid-day Nov 10 EST, so confirm whether it shipped, whether hosted environments are back up, and whether scanning is still the only activity N-able confirms. Story 1 changes if any of that moved.
 
 Worth 30 seconds, because MSPs in chat will ask: Ecoverse services through N-able Login stay up (Asset View, Patching, Vulnerability Management, scripting, policies, tagging), along with N-able.app, Take Control from Asset View, and on-demand Windows Patching in preview. Huntress's guidance is to review login and audit logs from November 8 onward. One report says Kaseya disabled associated Autotask API users, which is the blast radius spreading sideways.
 Context that makes it a pattern, not an incident: N-central 2026.4 HF1 went out on Nov 2 for CVE-2026-98432, CVE-2026-111497 and CVE-2026-114406. That is the Linux TCP bug from EP7 and the Brotli decoder bug from EP6, inside the RMM appliance. Beazley also notes researchers linked China-nexus Volt Typhoon to zero-day exploitation of two earlier N-central flaws in October 2026.
@@ -164,7 +141,7 @@ Hook: "A design-level flaw in every terminal since 1971 lets anyone who opens a 
 Tier to name: satire. No CVE, no vendor, nobody credited on the page.
 On-air line: "CVSS 11 out of 10, which is one more than the maximum, and about as real as the rest of it."
 
-### Deep dive: reproduce CVE-2026-123158 (12:30)
+## Deep dive: reproduce CVE-2026-123158
 
 Show the thing, in an Alpine container:
 
@@ -174,33 +151,6 @@ Show the thing, in an Alpine container:
 
 The control answer: no password authentication for root or key-only accounts, no root login, and vendor packages current. The honest part: for the Alpine boxes in the room, someone tried this within nine hours of publication.
 Rehearse it: the behaviour depends on the musl version and whether PAM is compiled in, so verify the container before air rather than discovering it live.
-
-### Headline and thumbnail options
-
-Rule: the title and the thumbnail never repeat each other's words. Thumb text stays four words or fewer, and has to read at 240 pixels wide. Orange and black, 8-bit retro, Oxanium, no faces, real product photography or UI screenshots with Canva for layout only.
-
-| # | Title | Thumb text | Why this one | Visual |
-|---|---|---|---|---|
-| 1 | SSL-VPN: The Gift That Keeps On Giving | MFA bypassed again | The snark you asked for, aimed straight at the appliance family that keeps producing CVEs. Pays off because CVE-2024-40766 is still being exploited | SonicWall firewall photo, overlaid with a terminal mid-bypass |
-| 2 | The Gift That Keeps On Giving Has a KEV Entry | Patch by Friday | Same idea, sharper, and the deadline is real: Nov 20 is a Friday | The CISA KEV row for CVE-2026-19868, cropped tight |
-| 3 | The MFA You Paid For, Bypassed Twice | Edge appliances never learn | Carries the episode rather than one story: SonicWall, sshd, and DigiCert's self-registration all skipped the control somebody paid for | Split frame, firewall admin UI left, sshd session right |
-| 4 | The Backdoor Shipped With the Firmware | Sold at the factory | Strongest single-story hook in the set, and it breaks the "patch it" reflex | Android TV box photo, or the `x.cpe` listing in a package view |
-| 5 | A Vendor Bypass, a Kernel Bypass, and a Coding Assignment | Three ways in | The EP6-style list title. Safe choice, less personality | Three product shots in a row: firewall, terminal, laptop |
-
-| 6 | Your RMM Is the Blast Radius | One credential away | Only if N-able leads and you want the title to follow the lead story. It aims at the audience's own stack, which is the strongest hook in the set for MSPs | N-central console or an RMM dashboard, agents listed down the side |
-
-**Chosen: option 1, "SSL-VPN: The Gift That Keeps On Giving", with thumb text "MFA bypassed again".**
-Option 1 stays locked, and it still fits with N-able leading since the title never had to follow
-the lead story. If you would rather the title track the new opener, option 6 is the one to swap in.
-The other four stay here for clip titles or a future episode.
-
-### Cold open options
-
-- Primary: "An RMM vendor took its own hosted platform offline today, and told every on-prem customer to do the same."
-- Alt: "A crypto exchange lost 6.34 billion dollars, and the way in was a fake job interview."
-- Alt: "SonicWall fixed the bypass. Everyone who was already inside the box did not care."
-- Alt: "The backdoor was not installed after you bought the box. It shipped in the firmware."
-- Your line, kept for story 3 and available as a cold open: "SSL-VPN really is the gift that keeps on giving... to threat actors."
 
 ---
 
@@ -220,105 +170,6 @@ is cited on air again.
 
 ---
 
-## Pre-production checklist
-
-**T-72 hours**
-- Story picks confirmed, one source link each, in the sheet above.
-- Deep dive picked, and you can name the control it maps to.
-- Confirm Matt's availability and any guest.
-
-**T-24 hours**
-- Sources verified. No unverified numbers, CVE IDs, or dates on air.
-- Anything unproven gets labeled "alleged."
-- Open loops from last week checked: what did we promise to follow up?
-- Titles and thumbnail text drafted (thumbnail text four words or fewer).
-
-**T-60 minutes**
-- Stream key and encoder tested. Audio levels checked on both mics.
-- N-able status page (incident 202580) re-checked. The hotfix ETA was mid-day Nov 10 EST: has it shipped, are hosted environments back, and is scanning still the only vendor-confirmed activity? Story 1 changes if any of that moved.
-- Share the story sheet with Matt and the producer.
-- Chat open, mod tools loaded, banned-word list current.
-- Browser tabs, terminal, and any demo targets ready and pinned.
-
-**T-15 minutes**
-- Pre-roll slate up. Countdown running.
-- Chat pinned message: what we are covering, where to ask questions.
-- Everyone muted except the person testing.
-
-**T-5 minutes**
-- Standby. Phones down. Do not start the deep dive from a cold tab.
-
----
-
-## Run of show (62 minute target, eight stories)
-
-Eight stories is 27 minutes of roundup before the deep dive, so this runs long on purpose.
-The 45 minute row in the segment bank below is the trim if the clock bites.
-
-| Clock | Block | Target | Owner |
-|---|---|---|---|
-| 0:00 | Cold open / hook | 1:30 | Tom |
-| 1:30 | Intro and housekeeping | 1:30 | Tom |
-| 3:00 | Story 1: N-able and Able2Shell | 5:00 | Tom |
-| 8:00 | Story 2: Binance and TraderTraitor | 4:30 | Matt |
-| 12:30 | Story 3: SonicWall SSLVPN bypass | 4:00 | Tom |
-| 16:30 | Story 4: `*sshole`, CVE-2026-123158 | 3:00 | Matt |
-| 19:30 | Story 5: XCPE botnet | 3:30 | Tom |
-| 23:00 | Story 6: DigiCert | 3:30 | Matt |
-| 26:30 | Story 7: White House proxy exits | 2:30 | Tom |
-| 29:00 | Story 8: Terminal2Shell | 1:00 | Matt |
-| 30:00 | Deep dive setup | 1:00 | Tom |
-| 31:00 | Deep dive: reproduce CVE-2026-123158 | 12:30 | Tom |
-| 43:30 | Which control would have caught this | 8:00 | Both |
-| 51:30 | Framework mapping | 4:00 | Both |
-| 55:30 | Chat Q and A | 4:00 | Both |
-| 59:30 | Open loops from EP7 | 1:30 | Tom |
-| 61:00 | Close and next week teaser | 1:00 | Tom |
-| 62:00 | End | n/a | n/a |
-
-### Block notes
-
-**Cold open / hook (0:00)**
-No intro music first. Lead with the sharpest single fact of the week, then stop. This is the clip that gets pulled. One sentence, no context, no "welcome back."
-
-**Intro and housekeeping (1:30)**
-Who we are, what we cover, the one-line show promise. Point people to show notes in the description. Keep it under two minutes.
-
-**Weekly roundup, stories 1 to 8 (3:00)**
-Eight stories, target durations 5:00, 4:30, 4:00, 3:00, 3:30, 3:30, 2:30, 1:00. Per story: what happened, who is affected, what the vendor did or did not do. Name the evidence tier out loud (vendor advisory, CVE, court record, independent testing, assessment, opinion). Do not read a spec sheet. If the clock slips, cut story 8 to a mention, then cut story 7, since those are the lightest and the shallowest sourced.
-
-**Deep dive setup and deep dive (30:00)**
-One topic, taken all the way down. Show the thing: terminal, admin console, packet capture, the actual bad config. Screens or it did not happen. This is where the tutorial lives inside the news.
-
-**Which control would have caught this (43:30)**
-The signature beat. Take the week's incidents and answer, concretely: which control, at which layer, would have caught or contained this? Name real controls, not "defense in depth" handwaving. Say when the honest answer is "nothing would have" and why.
-
-**Framework mapping (51:30)**
-Map the week's topics to the frameworks listeners actually report against (CIS Controls, NIST CSF, MITRE ATT&CK). Give the specific control number and what to go check. This is the takeaway that makes the episode actionable.
-
-**Chat Q and A (55:30)**
-Answer live. Take the good ones in order, do not cherry-pick softballs. If a question exposes a gap in our knowledge, say so on air.
-
-**Open loops from EP7 (59:30)**
-Close the promise. Anything we said "we do not know" about last week gets an answer or an honest "still no fix."
-
-**Close and next week teaser (61:00)**
-One line on next week. Where to subscribe, where the show notes live. No fear-selling sign-off.
-
----
-
-## Segment bank (scale the runtime)
-
-| Runtime | Drop | Keep |
-|---|---|---|
-| 30 min | Stories 3 to 8, framework mapping | Cold open, stories 1 to 2, deep dive (10 min), control beat, close |
-| 45 min | Story 8, story 7, framework mapping | Full run at trimmed durations, stories cut to 3:00 |
-| 62 min | Nothing | Full run as scheduled, no guest |
-
-Guest segment, if used: five questions max, one of them is always "which control would have caught this."
-
----
-
 ## Beats that never drop
 
 - Which control would have caught this.
@@ -326,55 +177,3 @@ Guest segment, if used: five questions max, one of them is always "which control
 - Open unknowns named on air and followed up next week.
 - Chat questions answered live, in order.
 - Evidence tier named for every claim.
-
----
-
-## Roles
-
-| Role | Owns |
-|---|---|
-| Host (Tom) | Clock, cold open, close, open loops |
-| Co-host (Matt) | Second story, control beat, framework mapping |
-| Producer / chat mod | Stream health, chat triage, pulling questions, flagging the clock |
-| Guest (if any) | One segment only, pre-briefed on the control angle |
-
----
-
-## Post-show, within 24 hours
-
-- Show notes published: per-story summary, source links, framework control numbers, timestamps.
-- Follow-ups from open loops logged for next week's sheet.
-- Clips cut: cold open and the control beat are the two most likely.
-- Title and thumbnail finalized with real product photography or UI screenshots. Canva is for layout only.
-- Chapter timestamps pulled from the transcript, not the outline. Fix product-name transcription errors (MikroTik, RouterOS, XCP-ng, Proxmox, TrueNAS, UniFi).
-- Sponsorship and review-unit disclosures added if anything on air was vendor-supplied.
-
----
-
-## Show notes template
-
-```
-Episode <N>: <Title>
-
-<One paragraph summary of what we covered.>
-
-Stories
-- <Story 1>, <source link>
-- <Story 2>, <source link>
-- <Story 3>, <source link>
-
-Deep dive
-<What we showed and the control it maps to.> <link>
-
-Which control would have caught this
-<The concrete answer and the framework control number.>
-
-Follow-ups promised for next week
-- <item>
-
-Chapters
-00:00 Cold open
-01:30 Intro
-03:30 <Story 1>
-...
-```
