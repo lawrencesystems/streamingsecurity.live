@@ -12,7 +12,7 @@ laws:
       Treat a first exploited CVE as the start of a campaign against that product. Raise monitoring,
       speed up patch cadence, and plan for compensating controls or replacement instead of assuming one
       patch closes the chapter.
-    episodes: []
+    episodes: [8]
 
   - name: The Law of Collapsing Complexity
     statement: That which is complex will no longer be too complex for threat actors.
