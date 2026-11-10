@@ -33,28 +33,32 @@ Do not write a script. Write a hook sentence and three bullets per story, then r
 | Air date | Tue 2026-11-10 |
 | Hosts | Tom Lawrence, Matt Lee |
 | Producer / chat moderator | TBD |
-| Expected runtime | 60 min target, six stories. EP6 ran 54:21, EP7 ran 56:59 |
+| Expected runtime | 62 min target, eight stories. EP6 ran 54:21, EP7 ran 56:59 |
 | Cold open hook (one sentence) | A crypto exchange lost 6.34 billion dollars, and the way in was a fake job interview. |
 | Guest (if any) | None |
 | Sponsor read (if any) | None |
 | Title (locked) | SSL-VPN: The Gift That Keeps On Giving |
 | Thumb text (locked) | MFA bypassed again |
 
-### Story sheet (six stories, in order, then the deep dive)
+### Story sheet (eight stories, in order, then the deep dive)
 
-Order rationale: open on the biggest story, move through the two auth bypasses while
-the audience is still on patch urgency, then the two "you trusted the wrong party"
-stories, then close lighter. Stories 2 and 3 are deliberately adjacent so the two
+Order rationale: story 1 is N-able, because for this audience the RMM going dark is the
+most urgent story of the week and the best teaching beat in the set. Binance moves to 2
+and keeps the most cinematic chain. Stories 3 and 4 are deliberately adjacent so the two
 authentication bypasses reinforce each other instead of reading as separate patch notices.
+Story 8 is Terminal2Shell, satire rather than a vulnerability, so it closes the show and is
+the first cut if the clock bites. Matt tagged N-able as Law 2.
 
 | # | Story | Source link | Why it matters | Control angle |
 |---|---|---|---|---|
-| 1 | **Binance, TraderTraitor, and a coding assignment.** USD 6.34B taken Oct 29, attributed by the FBI, Secret Service and IRS-CI to DPRK's TraderTraitor. Chain: a tampered Homebrew installer for an AI coding tool in June, then a fake recruiter, two interviews and a "coding assignment" repo in September, then a container deployment token. | [Binance incident report](https://www.binance.com/en/blog/community/3229153443759566763) | The human path is the exploit chain: dev tooling, a real job platform, one deployment token. Endpoint protection missed the second stage. | CIS 5.4, 6.5, 6.8, 8.11, 14.2, 17.4 |
-| 2 | **SonicWall SonicOS SSLVPN auth enforcement bypass, CVE-2026-19868** (CWE-308), one of seven flaws in SNWLID-2026-0014. Valid credentials for an alternate auth method bypass the SAML controls, and the MFA SAML was enforcing. In KEV the same day. | [PSIRT SNWLID-2026-0014](https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0014), [CISA KEV alert](https://www.cisa.gov/news-events/alerts/2026/11/06/cisa-adds-one-known-exploited-vulnerability-catalog) | KEV plus reported exploitation plus no workaround. CVE-2024-40766 is still being exploited two years on, so this appliance family is a proven repeat target. | CIS 4.1, 4.8, 5.4, 7.4 |
-| 3 | **`*sshole` / CVE-2026-123158.** sshd on musl libc with no PAM accepts any password of 257 to 1024 bytes when the shadow field is exactly `*`. Fixed in OpenSSH 10.6p2 on Nov 5. Also the deep dive. | [sshhole.com](https://sshhole.com/), [OpenSSH 10.6p2 release notes](https://www.openssh.org/txt/release-10.6p2) | Exploited in the wild less than nine hours after publication. Recon only so far, and CISA has not added it to KEV. | CIS 4.1, 4.8, 5.4, 7.4 |
-| 4 | **XCPE botnet.** 1.3M pre-infected Android set-top boxes. Google assesses with high confidence that Videostrong, a Chinese OEM/ODM, built and sold backdoor access. `x.cpe` ran in firmware at system UID; modules monetized devices as proxy exits and ad fraud. | [Google Threat Intelligence](https://cloud.google.com/blog/topics/threat-intelligence/shutting-the-door-on-the-xcpe-botnet), [Synthient report](https://synthient.com/blog/the-internals-of-a-badbox-operation) | The backdoor shipped in the firmware, so the trust unit is the hardware OEM, not the app. Google's answer was legal action and a certified-device ban, not a patch. | CIS 1.1, 2.1, 9.2, 12.2, 12.4, 15.1, 15.4 |
-| 5 | **DigiCert CA compliance incident.** An internal system moved out of a VPN segment into an internet-reachable availability zone on 2025-02-04 and stayed 16 months. A self-registration feature skipped the MFA DigiCert otherwise requires, and one account read archived customer records in late June. | [Bugzilla 2084460](https://bugzilla.mozilla.org/show_bug.cgi?id=2084460), [The Record](https://therecord.media/digicert-certificate-authority-reports-data-breach) | Read-only and no certificates affected, but the detection timeline is the story: unknown accounts spotted in June, data access only confirmed October 19. | CIS 3.12, 4.1, 6.4, 6.8, 8.11 |
-| 6 | **Residential proxy exits on the White House network** (AS2650). 236 exits from 6 addresses across 26 of 30 days, via 28 proxy services. The likely install named is Rave.io, a watch-party app bundling 12 proxy SDKs. | [Layer3 Intel](https://layer3intel.com/blog/residential-proxies-white-house-network), [The Register](https://www.theregister.com/security/2026/11/05/the-white-house-is-apparently-a-popular-residential-proxy-exit-spot/5307969) | Not a breach. Staff devices selling bandwidth, which is an inventory and egress problem rather than malware. Three source links deep, so treat it as the lighter close. | CIS 2.1, 2.5, 9.2, 12.4 |
+| 1 | **N-able took Hosted N-central offline** (Americas, APAC, Europe) and told on-prem customers to take their N-central servers offline too, citing a public disclosure of critical vulnerabilities in N-central and stating it has seen no active exploitation. The disclosure is Able2Shell: 33 N-central PoCs published by Sean Bales (Oracle-Security) on Nov 9 at 04:14 UTC, tested against N-central Appliance 2026.4.0.31, asserted unpatched, including anonymous chains to the `nable` account and to root. | [N-able uptime event 202559](https://uptime.n-able.com/event/202559/), [Able2Shell repo](https://github.com/Oracle-Security/CVEs/tree/main/0-Days/N-Central%20N-Able), [disclosure post](https://x.com/seankbales/status/2119648052872888572) | The vendor-attested half is the story: the first time N-able has taken its own hosted environment fully offline and told on-prem customers to follow. No exploitation claimed, so this is the precaution, not a breach. N-central has taken five flaws already this year, two in KEV. | CIS 7.4, 15.1, 15.4, 16.5, 16.11 |
+| 2 | **Binance, TraderTraitor, and a coding assignment.** USD 6.34B taken Oct 29, attributed by the FBI, Secret Service and IRS-CI to DPRK's TraderTraitor. Chain: a tampered Homebrew installer for an AI coding tool in June, then a fake recruiter, two interviews and a "coding assignment" repo in September, then a container deployment token. | [Binance incident report](https://www.binance.com/en/blog/community/3229153443759566763) | The human path is the exploit chain: dev tooling, a real job platform, one deployment token. Endpoint protection missed the second stage. | CIS 5.4, 6.5, 6.8, 8.11, 14.2, 17.4 |
+| 3 | **SonicWall SonicOS SSLVPN auth enforcement bypass, CVE-2026-19868** (CWE-308), one of seven flaws in SNWLID-2026-0014. Valid credentials for an alternate auth method bypass the SAML controls, and the MFA SAML was enforcing. In KEV the same day. | [PSIRT SNWLID-2026-0014](https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0014), [CISA KEV alert](https://www.cisa.gov/news-events/alerts/2026/11/06/cisa-adds-one-known-exploited-vulnerability-catalog) | KEV plus reported exploitation plus no workaround. CVE-2024-40766 is still being exploited two years on, so this appliance family is a proven repeat target. | CIS 4.1, 4.8, 5.4, 7.4 |
+| 4 | **`*sshole` / CVE-2026-123158.** sshd on musl libc with no PAM accepts any password of 257 to 1024 bytes when the shadow field is exactly `*`. Fixed in OpenSSH 10.6p2 on Nov 5. Also the deep dive. | [sshhole.com](https://sshhole.com/), [OpenSSH 10.6p2 release notes](https://www.openssh.org/txt/release-10.6p2) | Exploited in the wild less than nine hours after publication. Recon only so far, and CISA has not added it to KEV. | CIS 4.1, 4.8, 5.4, 7.4 |
+| 5 | **XCPE botnet.** 1.3M pre-infected Android set-top boxes. Google assesses with high confidence that Videostrong, a Chinese OEM/ODM, built and sold backdoor access. `x.cpe` ran in firmware at system UID; modules monetized devices as proxy exits and ad fraud. | [Google Threat Intelligence](https://cloud.google.com/blog/topics/threat-intelligence/shutting-the-door-on-the-xcpe-botnet), [Synthient report](https://synthient.com/blog/the-internals-of-a-badbox-operation) | The backdoor shipped in the firmware, so the trust unit is the hardware OEM, not the app. Google's answer was legal action and a certified-device ban, not a patch. | CIS 1.1, 2.1, 9.2, 12.2, 12.4, 15.1, 15.4 |
+| 6 | **DigiCert CA compliance incident.** An internal system moved out of a VPN segment into an internet-reachable availability zone on 2025-02-04 and stayed 16 months. A self-registration feature skipped the MFA DigiCert otherwise requires, and one account read archived customer records in late June. | [Bugzilla 2084460](https://bugzilla.mozilla.org/show_bug.cgi?id=2084460), [The Record](https://therecord.media/digicert-certificate-authority-reports-data-breach) | Read-only and no certificates affected, but the detection timeline is the story: unknown accounts spotted in June, data access only confirmed October 19. | CIS 3.12, 4.1, 6.4, 6.8, 8.11 |
+| 7 | **Residential proxy exits on the White House network** (AS2650). 236 exits from 6 addresses across 26 of 30 days, via 28 proxy services. The likely install named is Rave.io, a watch-party app bundling 12 proxy SDKs. | [Layer3 Intel](https://layer3intel.com/blog/residential-proxies-white-house-network), [The Register](https://www.theregister.com/security/2026/11/05/the-white-house-is-apparently-a-popular-residential-proxy-exit-spot/5307969) | Not a breach. Staff devices selling bandwidth, which is an inventory and egress problem rather than malware. Three source links deep, so treat it as the lighter close. | CIS 2.1, 2.5, 9.2, 12.4 |
+| 8 | **Terminal2Shell (terminal2shell.com)**, a parody advisory for a "design-level vulnerability in terminal emulators": opening a terminal spawns a shell wired to your keyboard. "CVSS 11.0 out of 10", affected list includes the DEC VT100 over a serial cable, and the mitigations include removing the keyboard. Not a vulnerability: a joke about the 2Shell naming trend. | [terminal2shell.com](https://terminal2shell.com) | One minute of show that makes the point better than a lecture: a scary name, a logo and a website do not add up to a reachable exploit. It lands because the real ones beside it are real. | CIS 15.4, 16.5: read the advisory, not the logo. NIS2 21(2)(d) on supply chain claims |
 
 Deep dive topic: reproduce CVE-2026-123158. Alpine container, unpatched sshd, log in as
 root with a 257-byte password, then read the code path. Story 3 sets it up, the deep dive
@@ -66,7 +70,19 @@ Framework(s) to map against: CIS Controls v8.1, NIS2 / ENISA Implementing Regula
 Per story: the hook sentence, three bullets, and the evidence tier to name out loud. Do not
 script the rest.
 
-**1. Binance**
+**1. N-able and Able2Shell**
+
+Hook: "An RMM vendor took its own hosted platform offline today, and told every on-prem customer to do the same."
+
+- N-able's own status page (event 202559) says Hosted N-central is offline across the Americas, APAC and Europe, names a "public disclosure of critical vulnerabilities in N-central", and states it has seen no active exploitation. This is the first time N-able has taken its hosted environment fully offline and told on-prem customers to follow.
+- The disclosure is Able2Shell: 33 N-central PoCs from Sean Bales (Oracle-Security), published Nov 9 at 04:14 UTC, tested against N-central Appliance 2026.4.0.31, asserted unpatched, including anonymous chains to the `nable` account and to root. N-able's notice came about ten hours later and names neither the researcher nor the flaws, so the link between them is an inference from timing.
+- Context: N-central has already taken five flaws this year. CVE-2026-18556 and CVE-2026-18577 in August, both in KEV. CVE-2026-86206, CVE-2026-86207 and CVE-2026-86218 in September, the last a CVSS 10.0 pre-auth RCE that also went to KEV.
+
+Tier to name: two layers, and keep them apart. The shutdown is vendor-attested, by N-able's own status page. The disclosure is a researcher-published PoC repo: self-asserted, reproduced by nobody else, and not acknowledged by the vendor. No CVE, no advisory, no independent confirmation.
+Matt's question, answered on air: a WAF is a compensating control at best. Terminating and inspecting TLS there can plausibly catch the payload-shaped chains (XXE, path traversal, OGNL, oversized SOAP fields, uploads that write JSP). It cannot see the auth and logic flaws at all: the derived MMS3 passcode, registration-token disclosure to a Technician role, zero-role policy download, MDM UDID impersonation, session and object mismatch, and the audit-record overwrite. And the agent-facing services (MMS/MMS2/MMS3) have to stay reachable from every managed endpoint, so they cannot be narrowed to an allowlist the way the admin console can.
+On-air line: "Your RMM is one credential away from every machine you manage, which makes it the last place you want a 33-entry PoC repo pointed at."
+
+**2. Binance**
 
 Hook: "Binance lost 6.34 billion dollars, and the way in was a fake recruiter with a homework assignment."
 
@@ -77,7 +93,7 @@ Hook: "Binance lost 6.34 billion dollars, and the way in was a fake recruiter wi
 Tier to name: government attribution plus the victim's own incident report.
 Attribute, do not assert: Pyongyang denies it, and Elliptic's 12,000 wallets across 11 chains is a separate tracking estimate, not Binance's number.
 
-**2. SonicWall**
+**3. SonicWall**
 
 Hook: "SonicWall shipped a fix for an exploited MFA bypass with no workaround, and CISA added it to KEV the same day."
 
@@ -88,7 +104,7 @@ Hook: "SonicWall shipped a fix for an exploited MFA bypass with no workaround, a
 Tier to name: vendor PSIRT advisory plus CISA KEV. Nobody has published attack details, IoCs or an analysis of the intrusions.
 On-air line, yours: "SSL-VPN really is the gift that keeps on giving... to threat actors."
 
-**3. `*sshole`**
+**4. `*sshole`**
 
 Hook: "Any password between 257 and 1024 bytes logs you in as root on Alpine, because musl's crypt() has returned the string `*` since 2012."
 
@@ -99,7 +115,7 @@ Hook: "Any password between 257 and 1024 bytes logs you in as root on Alpine, be
 Tier to name: release notes plus distro advisory plus CVE record. The in-the-wild claim is one vendor's honeypot, unconfirmed.
 Two precision notes for air: the CVE record says 256 to 1024 characters and everyone else says 257, because 256 fails in the lab. And OpenSSH describing the root cause as "outside sshd" is a live ownership dispute with musl, not a settled fact.
 
-**4. XCPE**
+**5. XCPE**
 
 Hook: "The backdoor was not installed after you bought the box. It shipped in the firmware, from the company that made the box."
 
@@ -110,7 +126,7 @@ Hook: "The backdoor was not installed after you bought the box. It shipped in th
 Tier to name: one vendor's threat intelligence plus a second vendor's teardown and IOC list.
 Widen the inventory question: the same code was found on telehealth devices, karaoke machines and digital signage, so this is not a "which TVs" question.
 
-**5. DigiCert**
+**6. DigiCert**
 
 Hook: "A certificate authority moved an internal system onto the internet and did not notice for sixteen months."
 
@@ -121,7 +137,7 @@ Hook: "A certificate authority moved an internal system onto the internet and di
 Tier to name: the CA owner's own compliance filing to a root program. Vendor-attested narrative, and the record count is still undisclosed.
 Class problem, not one company: TWCA and D-Trust filed archive incidents in the same fortnight.
 
-**6. White House proxy exits**
+**7. White House proxy exits**
 
 Hook: "236 residential proxy exits were observed on the Executive Office of the President's network, from devices that were never compromised."
 
@@ -131,6 +147,17 @@ Hook: "236 residential proxy exits were observed on the Executive Office of the 
 
 Tier to name: independent vendor telemetry, corroborated by a second detection vendor and independent coverage.
 On-air line: "Free streaming app, monetized twice."
+
+**8. Terminal2Shell**
+
+Hook: "A design-level flaw in every terminal since 1971 lets anyone who opens a terminal get a shell. It is also not a vulnerability, and that is the whole point."
+
+- terminal2shell.com is a parody advisory, registered Oct 24: "CVSS 11.0 out of 10", "also tracked as TermGeddon", "CVE ID pending", a proof of concept that is an input box, and an affected list with the DEC VT100 over a serial cable on it.
+- It exists because the real ones beside it are real: PHP2Shell (CVE-2026-109618 and -109619) went out Oct 20 to 21, the Brotli decoder bug shipped as Node2Shell, then Python2Shell, then HTTP2Shell (CVE-2026-111497), and Able2Shell put 33 N-central PoCs out this morning.
+- Say out loud that it is a joke before the audience clicks it, then use it: the naming contest has outrun the reporting, and a logo is not an exploit.
+
+Tier to name: satire. No CVE, no vendor, nobody credited on the page.
+On-air line: "CVSS 11 out of 10, which is one more than the maximum, and about as real as the rest of it."
 
 ### Deep dive: reproduce CVE-2026-123158 (12:30)
 
@@ -155,15 +182,20 @@ Rule: the title and the thumbnail never repeat each other's words. Thumb text st
 | 4 | The Backdoor Shipped With the Firmware | Sold at the factory | Strongest single-story hook in the set, and it breaks the "patch it" reflex | Android TV box photo, or the `x.cpe` listing in a package view |
 | 5 | A Vendor Bypass, a Kernel Bypass, and a Coding Assignment | Three ways in | The EP6-style list title. Safe choice, less personality | Three product shots in a row: firewall, terminal, laptop |
 
+| 6 | Your RMM Is the Blast Radius | One credential away | Only if N-able leads and you want the title to follow the lead story. It aims at the audience's own stack, which is the strongest hook in the set for MSPs | N-central console or an RMM dashboard, agents listed down the side |
+
 **Chosen: option 1, "SSL-VPN: The Gift That Keeps On Giving", with thumb text "MFA bypassed again".**
+Option 1 stays locked, and it still fits with N-able leading since the title never had to follow
+the lead story. If you would rather the title track the new opener, option 6 is the one to swap in.
 The other four stay here for clip titles or a future episode.
 
 ### Cold open options
 
-- Primary: "A crypto exchange lost 6.34 billion dollars, and the way in was a fake job interview."
+- Primary: "An RMM vendor took its own hosted platform offline today, and told every on-prem customer to do the same."
+- Alt: "A crypto exchange lost 6.34 billion dollars, and the way in was a fake job interview."
 - Alt: "SonicWall fixed the bypass. Everyone who was already inside the box did not care."
 - Alt: "The backdoor was not installed after you bought the box. It shipped in the firmware."
-- Your line, kept for story 2 and available as a cold open: "SSL-VPN really is the gift that keeps on giving... to threat actors.")
+- Your line, kept for story 3 and available as a cold open: "SSL-VPN really is the gift that keeps on giving... to threat actors."
 
 ---
 
@@ -212,29 +244,31 @@ is cited on air again.
 
 ---
 
-## Run of show (60 minute target, six stories)
+## Run of show (62 minute target, eight stories)
 
-Six stories is 24 minutes of roundup before the deep dive, so this runs long on purpose.
+Eight stories is 27 minutes of roundup before the deep dive, so this runs long on purpose.
 The 45 minute row in the segment bank below is the trim if the clock bites.
 
 | Clock | Block | Target | Owner |
 |---|---|---|---|
 | 0:00 | Cold open / hook | 1:30 | Tom |
 | 1:30 | Intro and housekeeping | 1:30 | Tom |
-| 3:00 | Story 1: Binance and TraderTraitor | 5:00 | Tom |
-| 8:00 | Story 2: SonicWall SSLVPN bypass | 4:30 | Matt |
-| 12:30 | Story 3: `*sshole`, CVE-2026-123158 | 3:30 | Tom |
-| 16:00 | Story 4: XCPE botnet | 4:00 | Matt |
-| 20:00 | Story 5: DigiCert | 4:00 | Tom |
-| 24:00 | Story 6: White House proxy exits | 3:00 | Matt |
-| 27:00 | Deep dive setup | 1:00 | Tom |
-| 28:00 | Deep dive: reproduce CVE-2026-123158 | 12:30 | Tom |
-| 40:30 | Which control would have caught this | 8:00 | Both |
-| 48:30 | Framework mapping | 4:00 | Both |
-| 52:30 | Chat Q and A | 5:00 | Both |
-| 57:30 | Open loops from EP7 | 1:30 | Tom |
-| 59:00 | Close and next week teaser | 1:00 | Tom |
-| 60:00 | End | n/a | n/a |
+| 3:00 | Story 1: N-able and Able2Shell | 5:00 | Tom |
+| 8:00 | Story 2: Binance and TraderTraitor | 4:30 | Matt |
+| 12:30 | Story 3: SonicWall SSLVPN bypass | 4:00 | Tom |
+| 16:30 | Story 4: `*sshole`, CVE-2026-123158 | 3:00 | Matt |
+| 19:30 | Story 5: XCPE botnet | 3:30 | Tom |
+| 23:00 | Story 6: DigiCert | 3:30 | Matt |
+| 26:30 | Story 7: White House proxy exits | 2:30 | Tom |
+| 29:00 | Story 8: Terminal2Shell | 1:00 | Matt |
+| 30:00 | Deep dive setup | 1:00 | Tom |
+| 31:00 | Deep dive: reproduce CVE-2026-123158 | 12:30 | Tom |
+| 43:30 | Which control would have caught this | 8:00 | Both |
+| 51:30 | Framework mapping | 4:00 | Both |
+| 55:30 | Chat Q and A | 4:00 | Both |
+| 59:30 | Open loops from EP7 | 1:30 | Tom |
+| 61:00 | Close and next week teaser | 1:00 | Tom |
+| 62:00 | End | n/a | n/a |
 
 ### Block notes
 
@@ -244,25 +278,25 @@ No intro music first. Lead with the sharpest single fact of the week, then stop.
 **Intro and housekeeping (1:30)**
 Who we are, what we cover, the one-line show promise. Point people to show notes in the description. Keep it under two minutes.
 
-**Weekly roundup, stories 1 to 6 (3:00)**
-Six stories, target durations 5:00, 4:30, 3:30, 4:00, 4:00, 3:00. Per story: what happened, who is affected, what the vendor did or did not do. Name the evidence tier out loud (vendor advisory, CVE, court record, independent testing, assessment, opinion). Do not read a spec sheet. If the clock slips, cut story 6 first, since it is the lightest and the shallowest sourcing.
+**Weekly roundup, stories 1 to 8 (3:00)**
+Eight stories, target durations 5:00, 4:30, 4:00, 3:00, 3:30, 3:30, 2:30, 1:00. Per story: what happened, who is affected, what the vendor did or did not do. Name the evidence tier out loud (vendor advisory, CVE, court record, independent testing, assessment, opinion). Do not read a spec sheet. If the clock slips, cut story 8 to a mention, then cut story 7, since those are the lightest and the shallowest sourced.
 
-**Deep dive setup and deep dive (27:00)**
+**Deep dive setup and deep dive (30:00)**
 One topic, taken all the way down. Show the thing: terminal, admin console, packet capture, the actual bad config. Screens or it did not happen. This is where the tutorial lives inside the news.
 
-**Which control would have caught this (40:30)**
+**Which control would have caught this (43:30)**
 The signature beat. Take the week's incidents and answer, concretely: which control, at which layer, would have caught or contained this? Name real controls, not "defense in depth" handwaving. Say when the honest answer is "nothing would have" and why.
 
-**Framework mapping (48:30)**
+**Framework mapping (51:30)**
 Map the week's topics to the frameworks listeners actually report against (CIS Controls, NIST CSF, MITRE ATT&CK). Give the specific control number and what to go check. This is the takeaway that makes the episode actionable.
 
-**Chat Q and A (52:30)**
+**Chat Q and A (55:30)**
 Answer live. Take the good ones in order, do not cherry-pick softballs. If a question exposes a gap in our knowledge, say so on air.
 
-**Open loops from EP7 (57:30)**
+**Open loops from EP7 (59:30)**
 Close the promise. Anything we said "we do not know" about last week gets an answer or an honest "still no fix."
 
-**Close and next week teaser (59:00)**
+**Close and next week teaser (61:00)**
 One line on next week. Where to subscribe, where the show notes live. No fear-selling sign-off.
 
 ---
@@ -271,9 +305,9 @@ One line on next week. Where to subscribe, where the show notes live. No fear-se
 
 | Runtime | Drop | Keep |
 |---|---|---|
-| 30 min | Stories 3 to 6, framework mapping | Cold open, stories 1 to 2, deep dive (10 min), control beat, close |
-| 45 min | Story 6, framework mapping | Full run at trimmed durations, stories cut to 3:00 |
-| 60 min | Nothing | Full run as scheduled, no guest |
+| 30 min | Stories 3 to 8, framework mapping | Cold open, stories 1 to 2, deep dive (10 min), control beat, close |
+| 45 min | Story 8, story 7, framework mapping | Full run at trimmed durations, stories cut to 3:00 |
+| 62 min | Nothing | Full run as scheduled, no guest |
 
 Guest segment, if used: five questions max, one of them is always "which control would have caught this."
 
