@@ -1,6 +1,7 @@
 # Streaming Security, EP9: Production Run of Show
 
-*Airs Tue 2026-11-17. Hosts Tom Lawrence and Matt Lee.*
+*Live stream Tue 2026-11-17 on the Lawrence Systems channel. Uploaded to the Streaming
+Security channel Fri 2026-11-20. Hosts Tom Lawrence and Matt Lee.*
 
 Published so Matt and anyone watching can follow the prep. This is the production doc,
 not the show notes: it carries the running order, the per-story hooks, the deep dive plan,
@@ -9,7 +10,8 @@ and the chosen packaging. Show notes for aired episodes are in `content/episodes
 | Field | Value |
 |---|---|
 | Episode | 9 |
-| Air date | Tue 2026-11-17 |
+| Live stream | Tue 2026-11-17, Lawrence Systems channel |
+| Upload | Fri 2026-11-20, Streaming Security channel |
 | Hosts | Tom Lawrence, Matt Lee |
 | Title | ARTEX Didn't Rewrite the Playbook |
 | Thumb text | Old tools, new tempo |
