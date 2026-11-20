@@ -1,6 +1,7 @@
 # Streaming Security, EP8: Production Run of Show
 
-*Airs Tue 2026-11-10. Hosts Tom Lawrence and Matt Lee.*
+*Live stream Tue 2026-11-10 on the Lawrence Systems channel. Uploaded to the Streaming
+Security channel Thu 2026-11-12. Hosts Tom Lawrence and Matt Lee.*
 
 Published so Matt and anyone watching can follow the prep. This is the production doc,
 not the show notes: it carries the running order, the per-story hooks, the deep dive plan,
@@ -9,7 +10,8 @@ and the chosen packaging. Show notes for aired episodes are in `content/episodes
 | Field | Value |
 |---|---|
 | Episode | 8 |
-| Air date | Tue 2026-11-10 |
+| Live stream | Tue 2026-11-10, Lawrence Systems channel |
+| Upload | Thu 2026-11-12, Streaming Security channel |
 | Hosts | Tom Lawrence, Matt Lee |
 | Title | SSL-VPN: The Gift That Keeps On Giving |
 | Thumb text | MFA bypassed again |
